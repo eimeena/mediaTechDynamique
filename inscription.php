@@ -1,37 +1,36 @@
+
+
+
+<!DOCTYPE html>
 <?php
+
 session_start();
-if(isset($_POST['submit']))
-{
-$bd=mysqli_connect('localhost','root','wati-b2013','mediaTechDynamique');
-$name=($_POST['Name']);
-$username=($_POST['username']);
-$email=($_POST['email']);
-$password=($_POST['password']);
-$sql="INSERT INTO inscription(Name,username,email,password) VALUES('$name','$username','$email','$password')";
-mysqli_query($db, $sql);
+if (isset($_POST['submit'])) {
+  $db=mysqli_connect('localhost','boly','boly', 'mediatech');
+  $username=($_POST['username']);
+  $email=filter_var(($_POST['email']));
+
+  if (!filter_var($_POST['email'])) {
+    echo "Votre adresse email n'est pas valide";
+  }else
+  $password=md5(($_POST['password_1']));
+  $sql="INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
+  mysqli_query($db, $sql);
+
+  if (!$sql) {
+    
+  }
+ 
 header('location:video.php');
-if (!empty($_POST['Name']) AND !empty($_POST['username']) AND !empty($_POST['email']) AND !empty($_POST['password']))
-{
-  $name=htmlentities($_POST['Name']);
-$username=htmlentities($_POST['username']);
-$email=htmlentities($_POST['email']);
-$password=sha1($_POST['password']);
-
-
-
 }
 
-else
 
-{
-  $erreur="Tous les champs doivent etre remplis !";
-}
-}
 
 ?>
 
 
-<!DOCTYPE html>
+
+
 <html>
 <head>
 	<title>INSCRIPTION</title>
